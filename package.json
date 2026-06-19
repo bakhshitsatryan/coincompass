@@ -8,7 +8,9 @@
     "dev": "vite",
     "build": "tsc && vite build",
     "preview": "vite preview",
-    "data": "node scripts/build-countries-data.mjs"
+    "data": "node scripts/build-countries-data.mjs",
+    "predeploy": "npm run build",
+    "deploy": "gh-pages -d dist --dotfiles -m \"Deploy site\""
   },
   "dependencies": {
     "d3-geo": "^3.1.1",
@@ -28,6 +30,7 @@
     "@types/react-simple-maps": "^3.0.6",
     "@types/topojson-client": "^3.1.5",
     "@vitejs/plugin-react": "^4.3.3",
+    "gh-pages": "^6.3.0",
     "i18n-iso-countries": "^7.13.0",
     "topojson-client": "^3.1.0",
     "typescript": "^5.6.3",
