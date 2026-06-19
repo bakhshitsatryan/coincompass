@@ -34,14 +34,20 @@ export default function PortfolioHeader({ portfolio, onAmount, onReset }: Props)
       animate={{ y: 0, opacity: 1 }}
       transition={{ duration: 0.7, ease: [0.16, 1, 0.3, 1] }}
     >
-      <div className={styles.brand}>
+      <button
+        type="button"
+        className={styles.brand}
+        onClick={onReset}
+        aria-label="Back to home"
+        title="Back to home"
+      >
         <span className={styles.mark}>
           <Compass className="lucide" size={19} strokeWidth={1.6} />
         </span>
         <span className={styles.brandText}>
           Coin<span className="text-grad-gold">Compass</span>
         </span>
-      </div>
+      </button>
 
       <div className={styles.value}>
         <div className={styles.valueMeta}>
