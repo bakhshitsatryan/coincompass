@@ -1,19 +1,19 @@
-import { motion } from 'framer-motion'
-import { X, Home, ShoppingBasket, Sandwich, Coffee } from 'lucide-react'
-import type { LucideIcon } from 'lucide-react'
-import styles from './CountryResultCard.module.css'
-import GlassPanel from './ui/GlassPanel'
-import TierBadge from './ui/TierBadge'
-import FlagIcon from './ui/FlagIcon'
-import type { Country } from '../lib/types'
-import { computeLifestyle } from '../lib/lifestyle'
-import { formatCurrency, formatCompact, formatDuration } from '../lib/format'
+import { motion } from 'framer-motion';
+import { X, Home, ShoppingBasket, Sandwich, Coffee } from 'lucide-react';
+import type { LucideIcon } from 'lucide-react';
+import styles from './CountryResultCard.module.css';
+import GlassPanel from './ui/GlassPanel';
+import TierBadge from './ui/TierBadge';
+import FlagIcon from './ui/FlagIcon';
+import type { Country } from '../lib/types';
+import { computeLifestyle } from '../lib/lifestyle';
+import { formatCurrency, formatCompact, formatDuration } from '../lib/format';
 
 interface Props {
-  country: Country
-  amount: number
-  currency: string
-  onClose: () => void
+  country: Country;
+  amount: number;
+  currency: string;
+  onClose: () => void;
 }
 
 const COMPARISON_ICONS: Record<string, LucideIcon> = {
@@ -21,13 +21,18 @@ const COMPARISON_ICONS: Record<string, LucideIcon> = {
   food: ShoppingBasket,
   bigmac: Sandwich,
   coffee: Coffee,
-}
+};
 
-const ease = [0.16, 1, 0.3, 1] as const
+const ease = [0.16, 1, 0.3, 1] as const;
 
-export default function CountryResultCard({ country, amount, currency, onClose }: Props) {
-  const result = computeLifestyle(amount, country)
-  const { tier, years, comparisons } = result
+export default function CountryResultCard({
+  country,
+  amount,
+  currency,
+  onClose,
+}: Props) {
+  const result = computeLifestyle(amount, country);
+  const { tier, years, comparisons } = result;
 
   return (
     <motion.div
@@ -47,8 +52,8 @@ export default function CountryResultCard({ country, amount, currency, onClose }
           borderColor: `color-mix(in srgb, ${tier.color} 28%, var(--line))`,
         }}
       >
-        <button className={styles.close} onClick={onClose} aria-label="Close">
-          <X className="lucide" size={18} />
+        <button className={styles.close} onClick={onClose} aria-label='Close'>
+          <X className='lucide' size={18} />
         </button>
 
         <div className={styles.headRow}>
@@ -75,30 +80,44 @@ export default function CountryResultCard({ country, amount, currency, onClose }
 
           <div className={styles.story}>
             <p className={styles.sentence}>
-              With <strong className="tabular">{formatCurrency(amount, currency)}</strong> here,{' '}
+              With{' '}
+              <strong className='tabular'>
+                {formatCurrency(amount, currency)}
+              </strong>{' '}
+              here,{' '}
               {years >= 500 ? (
                 <>
                   you&rsquo;d live in comfort{' '}
-                  <strong style={{ color: tier.color }}>for the rest of your life</strong>.
+                  <strong style={{ color: tier.color }}>
+                    for the rest of your life
+                  </strong>
+                  .
                 </>
               ) : (
                 <>
                   you could live comfortably for{' '}
-                  <strong style={{ color: tier.color }}>{formatDuration(years)}</strong>.
+                  <strong style={{ color: tier.color }}>
+                    {formatDuration(years)}
+                  </strong>
+                  .
                 </>
               )}
             </p>
             <p className={styles.blurb}>{tier.blurb}</p>
             <p className={styles.cost}>
-              Comfortable living runs <strong>{formatCurrency(country.monthlyComfortable, currency)}/mo</strong>
-              {' · '}1-bed rent <strong>{formatCurrency(country.rent1br, currency)}</strong>
+              Comfortable living runs{' '}
+              <strong>
+                {formatCurrency(country.monthlyComfortable, currency)}/mo
+              </strong>
+              {' · '}1-bed rent{' '}
+              <strong>{formatCurrency(country.rent1br, currency)}</strong>
             </p>
           </div>
         </div>
 
         <div className={styles.grid}>
           {comparisons.map((c, i) => {
-            const Icon = COMPARISON_ICONS[c.id]
+            const Icon = COMPARISON_ICONS[c.id];
             return (
               <motion.div
                 key={c.id}
@@ -108,15 +127,17 @@ export default function CountryResultCard({ country, amount, currency, onClose }
                 transition={{ duration: 0.5, ease, delay: 0.12 + i * 0.06 }}
               >
                 <span className={styles.statIcon}>
-                  <Icon className="lucide" size={16} />
+                  <Icon className='lucide' size={16} />
                 </span>
-                <span className={styles.statValue}>{formatCompact(c.value)}</span>
+                <span className={styles.statValue}>
+                  {formatCompact(c.value)}
+                </span>
                 <span className={styles.statLabel}>{c.label}</span>
               </motion.div>
-            )
+            );
           })}
         </div>
       </GlassPanel>
     </motion.div>
-  )
+  );
 }

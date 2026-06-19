@@ -14,6 +14,11 @@
   padding-top: 84px;
 }
 
+.mapLoading {
+  width: 100%;
+  height: 100%;
+}
+
 .headerZone {
   position: absolute;
   top: var(--s-4);
@@ -30,6 +35,9 @@
   z-index: var(--z-nav);
 }
 
+/* Header height is dynamic (it wraps on narrow screens). The component reports
+   it via --header-h so the stage can sit clear of the header on mobile. */
+
 .scrim {
   position: fixed;
   inset: 0;
@@ -37,11 +45,14 @@
   background: radial-gradient(120% 90% at 50% 100%, rgba(3, 4, 8, 0.34), rgba(3, 4, 8, 0.6));
   backdrop-filter: blur(2.5px);
   -webkit-backdrop-filter: blur(2.5px);
+  /* Dim only — let wheel/trackpad zoom and the zoom buttons keep working with a
+     card open. Dismissal happens by tapping empty map area or the close button. */
+  pointer-events: none;
 }
 
 @media (max-width: 980px) {
   .stage {
-    padding-top: 132px;
+    padding-top: 150px;
   }
 }
 
@@ -55,6 +66,29 @@
 }
 
 @media (max-width: 680px) {
+  .mapView {
+    /* Use the real visual viewport unit so the layout doesn't jump when the
+       mobile browser chrome shows/hides. */
+    height: 100dvh;
+  }
+  .stage {
+    /* Header wraps to ~2 rows on phones; clear it and dodge the notch. */
+    padding-top: calc(168px + env(safe-area-inset-top));
+    padding-bottom: 0;
+  }
+  .headerZone {
+    top: calc(var(--s-3) + env(safe-area-inset-top));
+    width: calc(100vw - var(--s-4) * 2);
+  }
+  /* On phones the legend becomes a centered panel pinned to the bottom so it
+     no longer overlaps the map or floats over the zoom controls. */
+  .legendZone {
+    left: 50%;
+    right: auto;
+    bottom: calc(var(--s-4) + env(safe-area-inset-bottom));
+    transform: translateX(-50%);
+    width: min(420px, calc(100vw - var(--s-4) * 2));
+  }
   .hasCard .legendZone {
     opacity: 0;
     pointer-events: none;

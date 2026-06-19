@@ -13,9 +13,10 @@
 
 .chips {
   display: inline-flex;
+  flex-wrap: wrap;
   gap: 5px;
   padding: 4px;
-  border-radius: var(--r-pill);
+  border-radius: var(--r-lg);
   background: var(--surface);
   border: 1px solid var(--line);
 }
@@ -76,7 +77,26 @@
   background: none;
   border: none;
   outline: none;
-  font-size: 13px;
+  /* >=16px stops iOS Safari from auto-zooming the viewport on focus. */
+  font-size: 16px;
   font-weight: 600;
   font-variant-numeric: tabular-nums;
+}
+
+@media (max-width: 560px) {
+  .root {
+    width: 100%;
+  }
+  .label {
+    width: 100%;
+  }
+  .chips {
+    width: 100%;
+    justify-content: space-between;
+  }
+  .chip {
+    flex: 1;
+    text-align: center;
+    padding: 8px 4px;
+  }
 }

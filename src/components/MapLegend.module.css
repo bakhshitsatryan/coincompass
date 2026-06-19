@@ -100,3 +100,17 @@
     width: 210px;
   }
 }
+
+@media (max-width: 680px) {
+  .legend {
+    width: 100%;
+    padding: var(--s-3) var(--s-4);
+    background: rgba(8, 10, 16, 0.86);
+  }
+  .scaleInner {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    column-gap: var(--s-4);
+    gap: 2px var(--s-4);
+  }
+}

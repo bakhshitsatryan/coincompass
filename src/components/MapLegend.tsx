@@ -1,30 +1,38 @@
-import { useMemo, useState } from 'react'
-import { motion } from 'framer-motion'
-import { Crown, ChevronDown, MapPin } from 'lucide-react'
-import styles from './MapLegend.module.css'
-import { TIERS } from '../data/tiers'
-import { ALL_COUNTRIES } from '../lib/countries'
-import { summarizeWorld } from '../lib/lifestyle'
-import TierBadge from './ui/TierBadge'
-import FlagIcon from './ui/FlagIcon'
+import { useMemo, useState } from 'react';
+import { motion } from 'framer-motion';
+import { Crown, ChevronDown, MapPin } from 'lucide-react';
+import styles from './MapLegend.module.css';
+import { TIERS } from '../data/tiers';
+import { ALL_COUNTRIES } from '../lib/countries';
+import { summarizeWorld } from '../lib/lifestyle';
+import TierBadge from './ui/TierBadge';
+import FlagIcon from './ui/FlagIcon';
 
 interface Props {
-  amount: number
+  amount: number;
 }
 
 // Only count "real" countries (skip entries without an ISO2/flag).
-const COUNTABLE = ALL_COUNTRIES.filter((c) => c.iso2 && c.numericId)
+const COUNTABLE = ALL_COUNTRIES.filter((c) => c.iso2 && c.numericId);
 
 export default function MapLegend({ amount }: Props) {
-  const [open, setOpen] = useState(true)
-  const summary = useMemo(() => summarizeWorld(amount, COUNTABLE), [amount])
+  // Collapsed by default on phones so the legend doesn't blanket the map; the
+  // user can tap to expand the full tier breakdown.
+  const [open, setOpen] = useState(
+    typeof window === 'undefined' || window.innerWidth > 680
+  );
+  const summary = useMemo(() => summarizeWorld(amount, COUNTABLE), [amount]);
 
   const insight =
     summary.kingCount > 0
-      ? `You'd reign as a King in ${summary.kingCount} ${summary.kingCount === 1 ? 'country' : 'countries'}.`
+      ? `You'd reign as a King in ${summary.kingCount} ${
+          summary.kingCount === 1 ? 'country' : 'countries'
+        }.`
       : summary.comfortableOrBetter > 0
-        ? `You'd live comfortably in ${summary.comfortableOrBetter} ${summary.comfortableOrBetter === 1 ? 'country' : 'countries'}.`
-        : `Right now, this stack struggles almost everywhere.`
+      ? `You'd live comfortably in ${summary.comfortableOrBetter} ${
+          summary.comfortableOrBetter === 1 ? 'country' : 'countries'
+        }.`
+      : `Right now, this stack struggles almost everywhere.`;
 
   return (
     <motion.aside
@@ -35,14 +43,14 @@ export default function MapLegend({ amount }: Props) {
     >
       <div className={styles.insight}>
         <span className={styles.crown}>
-          <Crown className="lucide" size={16} strokeWidth={1.6} />
+          <Crown className='lucide' size={16} strokeWidth={1.6} />
         </span>
         <p className={styles.insightText}>{insight}</p>
       </div>
 
       {summary.bestCountry && (
         <div className={styles.best}>
-          <MapPin className="lucide" size={13} />
+          <MapPin className='lucide' size={13} />
           Lasts longest in
           <FlagIcon iso2={summary.bestCountry.iso2} size={14} />
           <strong>{summary.bestCountry.name}</strong>
@@ -51,7 +59,10 @@ export default function MapLegend({ amount }: Props) {
 
       <button className={styles.toggle} onClick={() => setOpen((v) => !v)}>
         How you'd live
-        <ChevronDown className={`lucide ${styles.chev} ${open ? styles.chevOpen : ''}`} size={14} />
+        <ChevronDown
+          className={`lucide ${styles.chev} ${open ? styles.chevOpen : ''}`}
+          size={14}
+        />
       </button>
 
       <motion.div
@@ -68,11 +79,13 @@ export default function MapLegend({ amount }: Props) {
               <span className={styles.rowLabel} style={{ color: tier.color }}>
                 {tier.label}
               </span>
-              <span className={styles.count}>{summary.tierCounts[tier.id] ?? 0}</span>
+              <span className={styles.count}>
+                {summary.tierCounts[tier.id] ?? 0}
+              </span>
             </div>
           ))}
         </div>
       </motion.div>
     </motion.aside>
-  )
+  );
 }

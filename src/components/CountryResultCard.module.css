@@ -1,8 +1,12 @@
 .dock {
   position: fixed;
-  left: 50%;
+  /* Center via auto margins, NOT translateX(-50%): the card animates with
+     framer-motion's `y`, which writes an inline `transform` that would clobber a
+     CSS translate — pushing the card off-center and over the zoom controls. */
+  left: 0;
+  right: 0;
+  margin: 0 auto;
   bottom: var(--s-5);
-  transform: translateX(-50%);
   width: min(760px, calc(100vw - var(--s-5) * 2));
   z-index: var(--z-overlay);
 }
@@ -155,8 +159,15 @@
 
 @media (max-width: 680px) {
   .dock {
+    /* Anchor to both edges instead of 100vw + centering transform. The map view
+       is an animated (transformed) ancestor, so a `position: fixed` element with
+       `width: 100vw` resolves against that transformed box and overflows. Pinning
+       left/right to 0 with auto width keeps the card flush regardless. */
+    left: 0;
+    right: 0;
     bottom: 0;
-    width: 100vw;
+    width: auto;
+    transform: none;
   }
   .shell {
     border-radius: var(--r-xl) var(--r-xl) 0 0;

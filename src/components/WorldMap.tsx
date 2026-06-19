@@ -16,10 +16,17 @@ interface Props {
   amount: number
   selected: Country | null
   onSelect: (c: Country) => void
+  onClose: () => void
 }
 
 type View = { coordinates: [number, number]; zoom: number }
-const HOME: View = { coordinates: [12, 18], zoom: 1 }
+// On phones the equal-earth map renders as a short band; nudge the default zoom
+// up a little so countries are large enough to tap comfortably.
+const isPhone = () => typeof window !== 'undefined' && window.innerWidth <= 680
+const HOME: View = {
+  coordinates: [12, 18],
+  zoom: isPhone() ? 1.5 : 1,
+}
 const lerp = (a: number, b: number, t: number) => a + (b - a) * t
 
 function centroidOf(geo: GeoLike): [number, number] | null {
@@ -32,7 +39,7 @@ function centroidOf(geo: GeoLike): [number, number] | null {
   }
 }
 
-export default function WorldMap({ amount, selected, onSelect }: Props) {
+export default function WorldMap({ amount, selected, onSelect, onClose }: Props) {
   const [hovered, setHovered] = useState<Country | null>(null)
   const [position, setPosition] = useState<View>(HOME)
 
@@ -42,6 +49,9 @@ export default function WorldMap({ amount, selected, onSelect }: Props) {
   posRef.current = position
   const rafRef = useRef<number | null>(null)
   const animatingRef = useRef(false)
+  // The view to fly back to once the country card is closed. Captured right
+  // before a country click zooms in, so closing restores the prior zoom/pan.
+  const restoreRef = useRef<View | null>(null)
   const reduced = useRef(
     typeof window !== 'undefined' && window.matchMedia('(prefers-reduced-motion: reduce)').matches,
   )
@@ -76,6 +86,15 @@ export default function WorldMap({ amount, selected, onSelect }: Props) {
     rafRef.current = requestAnimationFrame(tick)
   }, [])
 
+  // When the selection clears (card closed), fly back to the view we had before
+  // zooming into the country.
+  useEffect(() => {
+    if (!selected && restoreRef.current) {
+      animateTo(restoreRef.current.coordinates, restoreRef.current.zoom)
+      restoreRef.current = null
+    }
+  }, [selected, animateTo])
+
   const handleMove = (e: React.MouseEvent) => {
     const el = tipRef.current
     const box = containerRef.current
@@ -87,6 +106,9 @@ export default function WorldMap({ amount, selected, onSelect }: Props) {
   const handleClick = (geo: GeoLike) => {
     const c = countryFromGeo(geo)
     if (!c) return
+    // Remember where we were so closing the card returns here. Only capture on
+    // the first selection, not when hopping country-to-country with a card open.
+    if (!selected) restoreRef.current = posRef.current
     onSelect(c)
     const centroid = centroidOf(geo)
     if (centroid) animateTo(centroid, Math.max(2.6, posRef.current.zoom))
@@ -122,7 +144,18 @@ export default function WorldMap({ amount, selected, onSelect }: Props) {
             setPosition(pos)
           }}
         >
-          <Sphere id="sphere" className={styles.sphere} stroke="transparent" strokeWidth={0} fill="url(#ocean)" />
+          <Sphere
+            id="sphere"
+            className={styles.sphere}
+            stroke="transparent"
+            strokeWidth={0}
+            fill="url(#ocean)"
+            onClick={() => {
+              // Tapping empty ocean dismisses an open country card (the scrim is
+              // pointer-events:none so it no longer handles this).
+              if (selected) onClose()
+            }}
+          />
           <Graticule className={styles.graticule} stroke="rgba(255,255,255,0.05)" />
           <defs>
             <radialGradient id="ocean" cx="50%" cy="42%" r="75%">
