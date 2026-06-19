@@ -1,0 +1,178 @@
+.wrap {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.map {
+  width: 100%;
+  height: 100%;
+  display: block;
+  outline: none;
+}
+.map :global(svg) {
+  outline: none;
+}
+
+.geo {
+  outline: none;
+}
+.geo:focus {
+  outline: none;
+}
+
+.noData {
+  opacity: 0.55;
+}
+
+.selected {
+  filter: drop-shadow(0 0 6px rgba(255, 255, 255, 0.55));
+}
+
+/* ---- Zoom controls ---- */
+.controls {
+  position: absolute;
+  right: var(--s-4);
+  bottom: var(--s-4);
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  z-index: 5;
+}
+.ctrl {
+  width: 38px;
+  height: 38px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: var(--r-sm);
+  background: var(--surface-2);
+  border: 1px solid var(--line);
+  color: var(--text-dim);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  box-shadow: var(--shadow-float);
+  transition: all var(--dur-fast) var(--ease-out-expo);
+}
+.ctrl:hover {
+  color: var(--text);
+  border-color: var(--line-strong);
+  background: var(--surface-3);
+  transform: translateY(-1px);
+}
+.ctrl:active {
+  transform: scale(0.94);
+}
+
+/* ---- Cursor tooltip ---- */
+.tip {
+  position: absolute;
+  top: 0;
+  left: 0;
+  z-index: 6;
+  width: max-content;
+  max-width: 230px;
+  margin: -14px 0 0 18px;
+  padding: 11px 13px;
+  border-radius: var(--r-md);
+  background: rgba(10, 13, 20, 0.86);
+  border: 1px solid var(--line-strong);
+  box-shadow: var(--shadow-float);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  pointer-events: none;
+  opacity: 0;
+  transform-origin: top left;
+  transition: opacity 0.18s var(--ease-out-expo);
+  will-change: transform;
+}
+.tipShown {
+  opacity: 1;
+}
+.tipHead {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 9px;
+}
+.tipName {
+  font-weight: 600;
+  font-size: 14px;
+  font-family: var(--font-display);
+}
+.tipRow {
+  display: flex;
+  align-items: center;
+  gap: 9px;
+}
+.tipMeta {
+  display: flex;
+  flex-direction: column;
+  line-height: 1.25;
+}
+.tipMeta > span:first-child {
+  font-weight: 600;
+  font-size: 13px;
+}
+.tipYears {
+  font-size: 11.5px;
+  color: var(--text-faint);
+}
+.tipHint {
+  display: block;
+  margin-top: 9px;
+  font-size: 10px;
+  text-transform: uppercase;
+  letter-spacing: 0.16em;
+  color: var(--text-ghost);
+}
+
+/* ---- Idle hint ---- */
+.hint {
+  position: absolute;
+  bottom: var(--s-5);
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  align-items: center;
+  gap: 9px;
+  padding: 9px 16px;
+  border-radius: var(--r-pill);
+  background: var(--surface-2);
+  border: 1px solid var(--line);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  font-size: 12.5px;
+  color: var(--text-dim);
+  white-space: nowrap;
+  animation: hintIn 0.6s var(--ease-out-expo) both;
+}
+.hintDot {
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: var(--gold);
+  box-shadow: 0 0 8px 1px var(--gold-glow);
+}
+@keyframes hintIn {
+  from {
+    opacity: 0;
+    transform: translate(-50%, 12px);
+  }
+  to {
+    opacity: 1;
+    transform: translate(-50%, 0);
+  }
+}
+
+@media (max-width: 640px) {
+  .hint {
+    font-size: 11px;
+    white-space: normal;
+    text-align: center;
+    max-width: 84vw;
+  }
+}

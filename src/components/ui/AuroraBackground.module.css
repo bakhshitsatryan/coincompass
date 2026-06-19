@@ -1,0 +1,99 @@
+.aurora {
+  position: fixed;
+  inset: 0;
+  z-index: 0;
+  overflow: hidden;
+  pointer-events: none;
+  background:
+    radial-gradient(120% 120% at 50% -10%, #0a0e18 0%, var(--bg) 55%);
+}
+
+.orb {
+  position: absolute;
+  width: 60vmax;
+  height: 60vmax;
+  border-radius: 50%;
+  filter: blur(90px);
+  opacity: 0.5;
+  will-change: transform;
+  mix-blend-mode: screen;
+}
+
+.gold {
+  background: radial-gradient(circle, var(--gold-glow) 0%, transparent 65%);
+  top: -22vmax;
+  left: -10vmax;
+  animation: drift-a 26s var(--ease-fluid) infinite alternate;
+}
+
+.emerald {
+  background: radial-gradient(circle, var(--emerald-glow) 0%, transparent 65%);
+  bottom: -26vmax;
+  right: -14vmax;
+  animation: drift-b 32s var(--ease-fluid) infinite alternate;
+}
+
+.violet {
+  background: radial-gradient(circle, var(--violet-glow) 0%, transparent 65%);
+  top: 18vmax;
+  right: 6vmax;
+  width: 48vmax;
+  height: 48vmax;
+  opacity: 0.42;
+  animation: drift-c 38s var(--ease-fluid) infinite alternate;
+}
+
+.cyan {
+  background: radial-gradient(circle, rgba(63, 198, 240, 0.3) 0%, transparent 65%);
+  bottom: 4vmax;
+  left: 8vmax;
+  width: 42vmax;
+  height: 42vmax;
+  opacity: 0.36;
+  animation: drift-d 30s var(--ease-fluid) infinite alternate;
+}
+
+/* faint engineered grid for depth */
+.grid {
+  position: absolute;
+  inset: -1px;
+  background-image:
+    linear-gradient(rgba(255, 255, 255, 0.025) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255, 255, 255, 0.025) 1px, transparent 1px);
+  background-size: 64px 64px;
+  -webkit-mask-image: radial-gradient(120% 90% at 50% 30%, #000 0%, transparent 78%);
+  mask-image: radial-gradient(120% 90% at 50% 30%, #000 0%, transparent 78%);
+}
+
+.vignette {
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(120% 120% at 50% 42%, transparent 52%, rgba(0, 0, 0, 0.62) 100%);
+}
+
+@keyframes drift-a {
+  to {
+    transform: translate3d(14vmax, 10vmax, 0) scale(1.15);
+  }
+}
+@keyframes drift-b {
+  to {
+    transform: translate3d(-12vmax, -8vmax, 0) scale(1.1);
+  }
+}
+@keyframes drift-c {
+  to {
+    transform: translate3d(-10vmax, 12vmax, 0) scale(1.2);
+  }
+}
+@keyframes drift-d {
+  to {
+    transform: translate3d(10vmax, -10vmax, 0) scale(1.12);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .orb {
+    animation: none !important;
+  }
+}

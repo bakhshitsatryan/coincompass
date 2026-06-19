@@ -1,0 +1,117 @@
+.root {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--s-3);
+  border-radius: var(--r-pill);
+  font-weight: 600;
+  letter-spacing: -0.01em;
+  white-space: nowrap;
+  transition:
+    transform var(--dur-fast) var(--ease-spring),
+    box-shadow var(--dur-med) var(--ease-out-expo),
+    background var(--dur-med) var(--ease-out-expo),
+    border-color var(--dur-med) var(--ease-out-expo),
+    color var(--dur-med) var(--ease-out-expo);
+}
+.root:disabled {
+  opacity: 0.55;
+  cursor: not-allowed;
+}
+.root:not(:disabled):active {
+  transform: scale(0.97);
+}
+
+.md {
+  padding: 12px 18px;
+  font-size: 14.5px;
+}
+.lg {
+  padding: 17px 16px 17px 26px;
+  font-size: 16.5px;
+}
+.full {
+  width: 100%;
+}
+
+.label {
+  display: inline-block;
+}
+
+/* ---- Primary: liquid gold ---- */
+.primary {
+  background: linear-gradient(135deg, #ffe089 0%, var(--gold) 45%, var(--gold-deep) 100%);
+  color: #1c1404;
+  box-shadow:
+    0 1px 0 rgba(255, 255, 255, 0.5) inset,
+    0 14px 36px -14px var(--gold-glow),
+    0 2px 8px -4px rgba(0, 0, 0, 0.5);
+}
+.primary:not(:disabled):hover {
+  box-shadow:
+    0 1px 0 rgba(255, 255, 255, 0.6) inset,
+    0 22px 50px -16px var(--gold-glow),
+    0 3px 10px -4px rgba(0, 0, 0, 0.5);
+  transform: translateY(-1px);
+}
+
+/* ---- Secondary: glass ---- */
+.secondary {
+  background: var(--surface-2);
+  color: var(--text);
+  border: 1px solid var(--line-strong);
+  box-shadow: var(--shadow-inset-soft);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+}
+.secondary:not(:disabled):hover {
+  background: var(--surface-3);
+  border-color: rgba(255, 255, 255, 0.26);
+  transform: translateY(-1px);
+}
+
+/* ---- Ghost ---- */
+.ghost {
+  background: transparent;
+  color: var(--text-dim);
+}
+.ghost:not(:disabled):hover {
+  color: var(--text);
+  background: var(--surface);
+}
+
+/* ---- Nested trailing icon circle (button-in-button) ---- */
+.iconCircle {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 30px;
+  height: 30px;
+  border-radius: var(--r-pill);
+  background: rgba(0, 0, 0, 0.14);
+  transition:
+    transform var(--dur-med) var(--ease-out-expo),
+    background var(--dur-med) var(--ease-out-expo);
+}
+.secondary .iconCircle,
+.ghost .iconCircle {
+  background: var(--surface-3);
+}
+.lg .iconCircle {
+  width: 34px;
+  height: 34px;
+}
+.root:not(:disabled):hover .iconCircle {
+  transform: translate(3px, -1px) scale(1.06);
+  background: rgba(0, 0, 0, 0.22);
+}
+
+.spin {
+  animation: spin 0.9s linear infinite;
+}
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
+}

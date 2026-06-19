@@ -1,0 +1,62 @@
+.mapView {
+  position: relative;
+  width: 100%;
+  height: 100dvh;
+  overflow: hidden;
+}
+
+.stage {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding-top: 84px;
+}
+
+.headerZone {
+  position: absolute;
+  top: var(--s-4);
+  left: 50%;
+  transform: translateX(-50%);
+  width: min(var(--maxw), calc(100vw - var(--s-5) * 2));
+  z-index: var(--z-nav);
+}
+
+.legendZone {
+  position: absolute;
+  left: var(--s-5);
+  bottom: var(--s-5);
+  z-index: var(--z-nav);
+}
+
+.scrim {
+  position: fixed;
+  inset: 0;
+  z-index: 50;
+  background: radial-gradient(120% 90% at 50% 100%, rgba(3, 4, 8, 0.34), rgba(3, 4, 8, 0.6));
+  backdrop-filter: blur(2.5px);
+  -webkit-backdrop-filter: blur(2.5px);
+}
+
+@media (max-width: 980px) {
+  .stage {
+    padding-top: 132px;
+  }
+}
+
+@media (max-width: 860px) {
+  .legendZone {
+    left: var(--s-4);
+    bottom: var(--s-4);
+    transform: scale(0.92);
+    transform-origin: bottom left;
+  }
+}
+
+@media (max-width: 680px) {
+  .hasCard .legendZone {
+    opacity: 0;
+    pointer-events: none;
+  }
+}

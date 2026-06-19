@@ -1,0 +1,112 @@
+.bar {
+  position: relative;
+  z-index: var(--z-nav);
+  display: flex;
+  align-items: center;
+  gap: var(--s-5);
+  padding: var(--s-3) var(--s-5);
+  border-radius: var(--r-lg);
+  background: rgba(8, 10, 16, 0.7);
+  border: 1px solid var(--line);
+  box-shadow: var(--shadow-float);
+  backdrop-filter: blur(20px) saturate(150%);
+  -webkit-backdrop-filter: blur(20px) saturate(150%);
+}
+
+.brand {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  flex: none;
+}
+.mark {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 36px;
+  height: 36px;
+  border-radius: var(--r-sm);
+  color: var(--gold);
+  background: radial-gradient(120% 120% at 50% 0%, rgba(255, 206, 69, 0.22), transparent 70%), var(--surface-2);
+  border: 1px solid rgba(255, 206, 69, 0.32);
+  box-shadow: inset 0 1px 1px rgba(255, 255, 255, 0.14), 0 0 18px -6px var(--gold-glow);
+}
+.brandText {
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: 17px;
+  letter-spacing: -0.02em;
+}
+
+.value {
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+  padding-left: var(--s-5);
+  border-left: 1px solid var(--line);
+}
+.valueMeta {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+.sourceChip {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  font-size: 11px;
+  color: var(--text-faint);
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+}
+.pl {
+  font-size: 11px;
+  font-weight: 600;
+  font-variant-numeric: tabular-nums;
+}
+.up {
+  color: var(--emerald);
+}
+.down {
+  color: var(--rose);
+}
+.amount {
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: clamp(1.4rem, 2.4vw, 1.9rem);
+  letter-spacing: -0.03em;
+  line-height: 1;
+}
+
+.controls {
+  margin-left: auto;
+  display: flex;
+  align-items: center;
+  gap: var(--s-4);
+}
+.reset {
+  flex: none;
+}
+
+@media (max-width: 980px) {
+  .bar {
+    flex-wrap: wrap;
+    gap: var(--s-3) var(--s-4);
+  }
+  .controls {
+    width: 100%;
+    margin-left: 0;
+    justify-content: space-between;
+    padding-top: var(--s-3);
+    border-top: 1px solid var(--line);
+  }
+}
+
+@media (max-width: 560px) {
+  .value {
+    padding-left: var(--s-4);
+  }
+  .reset span {
+    display: none;
+  }
+}

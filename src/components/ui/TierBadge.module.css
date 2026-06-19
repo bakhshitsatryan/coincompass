@@ -1,0 +1,62 @@
+.badge {
+  --tier: var(--gold);
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 30%;
+  color: var(--tier);
+  background:
+    radial-gradient(120% 120% at 50% 0%, color-mix(in srgb, var(--tier) 26%, transparent), transparent 70%),
+    var(--surface-2);
+  border: 1px solid color-mix(in srgb, var(--tier) 40%, var(--line));
+  box-shadow:
+    inset 0 1px 1px rgba(255, 255, 255, 0.16),
+    0 0 22px -6px color-mix(in srgb, var(--tier) 70%, transparent);
+  flex: none;
+}
+
+.animated::before {
+  content: '';
+  position: absolute;
+  inset: -2px;
+  border-radius: inherit;
+  background: radial-gradient(circle at 50% 30%, color-mix(in srgb, var(--tier) 55%, transparent), transparent 70%);
+  opacity: 0.6;
+  filter: blur(8px);
+  z-index: -1;
+  animation: pulse 3.2s var(--ease-fluid) infinite;
+}
+
+.animated svg {
+  animation: float 4s var(--ease-fluid) infinite;
+}
+
+@keyframes pulse {
+  0%,
+  100% {
+    opacity: 0.4;
+    transform: scale(0.96);
+  }
+  50% {
+    opacity: 0.85;
+    transform: scale(1.08);
+  }
+}
+
+@keyframes float {
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-2.5px);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .animated::before,
+  .animated svg {
+    animation: none !important;
+  }
+}

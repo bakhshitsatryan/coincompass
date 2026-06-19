@@ -1,0 +1,102 @@
+.legend {
+  width: 248px;
+  padding: var(--s-4);
+  border-radius: var(--r-lg);
+  background: rgba(8, 10, 16, 0.72);
+  border: 1px solid var(--line);
+  box-shadow: var(--shadow-float);
+  backdrop-filter: blur(20px) saturate(150%);
+  -webkit-backdrop-filter: blur(20px) saturate(150%);
+}
+
+.insight {
+  display: flex;
+  gap: 10px;
+  align-items: flex-start;
+}
+.crown {
+  flex: none;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 30px;
+  height: 30px;
+  border-radius: var(--r-sm);
+  color: var(--gold);
+  background: radial-gradient(120% 120% at 50% 0%, rgba(255, 206, 69, 0.24), transparent 70%), var(--surface-2);
+  border: 1px solid rgba(255, 206, 69, 0.3);
+}
+.insightText {
+  font-size: 13.5px;
+  font-weight: 600;
+  line-height: 1.35;
+  font-family: var(--font-display);
+  letter-spacing: -0.01em;
+}
+
+.best {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 6px;
+  margin-top: var(--s-3);
+  padding-top: var(--s-3);
+  border-top: 1px solid var(--line);
+  font-size: 11.5px;
+  color: var(--text-faint);
+}
+.best strong {
+  color: var(--text-dim);
+  font-weight: 600;
+}
+
+.toggle {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+  margin-top: var(--s-3);
+  font-size: 11px;
+  text-transform: uppercase;
+  letter-spacing: 0.16em;
+  color: var(--text-ghost);
+}
+.chev {
+  transition: transform var(--dur-med) var(--ease-out-expo);
+}
+.chevOpen {
+  transform: rotate(180deg);
+}
+
+.scaleInner {
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+  padding-top: var(--s-3);
+}
+.row {
+  display: flex;
+  align-items: center;
+  gap: 9px;
+  padding: 3px 4px;
+  border-radius: var(--r-xs);
+}
+.rowLabel {
+  font-size: 12.5px;
+  font-weight: 600;
+  flex: 1;
+}
+.count {
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--text-faint);
+  font-variant-numeric: tabular-nums;
+  min-width: 26px;
+  text-align: right;
+}
+
+@media (max-width: 860px) {
+  .legend {
+    width: 210px;
+  }
+}
